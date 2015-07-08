@@ -1,0 +1,23 @@
+{
+  "author": "Brian Link <cpsubrian@gmail.com>",
+  "name": "cantina-socket.io",
+  "description": "Socket.io for Cantina",
+  "version": "4.1.0",
+  "main": "cantina-socket.io.js",
+  "scripts": {
+    "test": "make test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/cantina/cantina-socket.io.git"
+  },
+  "dependencies": {
+    "socket.io": "^1.3.5"
+  },
+  "devDependencies": {
+    "mocha": "~2.2.5",
+    "cantina": "^4.1.8",
+    "cantina-web": "^4.2.3"
+  },
+  "optionalDependencies": {}
+}
