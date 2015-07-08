@@ -1,7 +1,7 @@
 cantina-socket.io
 =================
 
-Engine.io for Cantina
+Socket.io for Cantina
 
 Dependencies
 ------------
