@@ -12,13 +12,16 @@ module.exports = function (app) {
 
   // Add useful hooks and events.
   app.server.once('listening', function () {
-    app.io.on('connection', function (socket) {
+    app.io.use(function socketIOHandshake (socket, next) {
       app.hook('io:handshake').run(socket, function (err) {
-        if (err) return app.emit('error', err);
-        app.emit('io:connected', socket);
-        socket.once('disconnect', function () {
-          app.emit('io:disconnected', socket);
-        });
+        if (err) return next(err);
+        next();
+      });
+    });
+    app.io.on('connection', function (socket) {
+      app.emit('io:connected', socket);
+      socket.once('disconnect', function () {
+        app.emit('io:disconnected', socket);
       });
     });
     app.emit('io:listening');
