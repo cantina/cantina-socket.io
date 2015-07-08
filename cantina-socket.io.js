@@ -1,26 +1,24 @@
+var app = require('cantina');
 var socketio = require('socket.io');
+var conf = app.conf.get('socket.io');
 
-module.exports = function (app) {
-  var conf = app.conf.get('socket.io');
+if (!app.server || !app.server.listen) {
+  throw new Error('No valid server found on app.server');
+}
 
-  if (!app.server || !app.server.listen) {
-    throw new Error('No valid server found on app.server');
-  }
+// Expose oil api.
+app.io = socketio(app.server, conf);
 
-  // Expose oil api.
-  app.io = socketio(app.server, conf);
-
-  // Add useful hooks and events.
-  app.server.once('listening', function () {
-    app.io.on('connection', function (socket) {
-      app.hook('io:handshake').run(socket, function (err) {
-        if (err) return app.emit('error', err);
-        app.emit('io:connected', socket);
-        socket.once('disconnect', function () {
-          app.emit('io:disconnected', socket);
-        });
+// Add useful hooks and events.
+app.server.once('listening', function () {
+  app.io.on('connection', function (socket) {
+    app.hook('io:handshake').run(socket, function (err) {
+      if (err) return app.emit('error', err);
+      app.emit('io:connected', socket);
+      socket.once('disconnect', function () {
+        app.emit('io:disconnected', socket);
       });
     });
-    app.emit('io:listening');
   });
-};
+  app.emit('io:listening');
+});
