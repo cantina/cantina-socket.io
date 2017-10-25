@@ -2,7 +2,7 @@
   "author": "Brian Link <cpsubrian@gmail.com>",
   "name": "cantina-socket.io",
   "description": "Socket.io for Cantina",
-  "version": "4.1.1",
+  "version": "3.0.0",
   "main": "cantina-socket.io.js",
   "scripts": {
     "test": "make test"
